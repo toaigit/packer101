@@ -1,0 +1,37 @@
+{
+  "variables": {
+    "os_to_build": "centos_7.x",
+    "aws_access_key": "$AWS_ACCESS_KEY_ID",
+    "aws_secret_key": "$AWS_SECRET_ACCESS_KEY"
+  },
+  "builders": [{
+    "type": "amazon-ebs",
+    "access_key": "{{user `$AWS_ACCESS_KEY_ID`}}",
+    "secret_key": "{{user `$AWS_SECRET_ACCESS_KEY`}}",
+    "region": "us-west-2",
+    "source_ami": "IMAGEID",
+    "instance_type": "t2.micro",
+    "ssh_username": "centos",
+    "subnet_id": "SUBNET",
+    "associate_public_ip_address": "true",
+    "security_group_id": "SGROUP",
+    "iam_instance_profile": "IAMROLE",
+    "ami_name": "IMAGENAME",
+    "run_tags": {
+        "Name": "IMAGENAME",
+        "Creator": "Packer"
+        },
+    "tags": {
+        "Name": "IMAGENAME",
+        "Creator": "Packer"
+        },
+    "ami_description": "IMAGEDESC",
+    "user_data_file" : "files/user-data.txt"
+  }],
+  "provisioners": [{
+    "type": "shell",
+    "inline": [
+       "sudo yum -y --security update"
+     ]
+  }]
+}
